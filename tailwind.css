@@ -30,22 +30,6 @@
   display: none
 }
 
-.h-64 {
-  height: 16rem
-}
-
-.h-auto {
-  height: auto
-}
-
-.h-full {
-  height: 100%
-}
-
-.w-full {
-  width: 100%
-}
-
 .border {
   border-width: 1px
 }
@@ -74,9 +58,4 @@
 
 .capitalize {
   text-transform: capitalize
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
 }

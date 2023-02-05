@@ -39,26 +39,6 @@
 			"display": "none"
 		}
 	},
-	"h-64": {
-		"style": {
-			"height": 256
-		}
-	},
-	"h-auto": {
-		"style": {
-			"height": "auto"
-		}
-	},
-	"h-full": {
-		"style": {
-			"height": "100%"
-		}
-	},
-	"w-full": {
-		"style": {
-			"width": "100%"
-		}
-	},
 	"border": {
 		"style": {
 			"borderTopWidth": 1,
@@ -97,12 +77,6 @@
 	"capitalize": {
 		"style": {
 			"textTransform": "capitalize"
-		}
-	},
-	"text-red-500": {
-		"style": {
-			"--tw-text-opacity": 1,
-			"color": "rgb(239 68 68 / var(--tw-text-opacity))"
 		}
 	}
 }
