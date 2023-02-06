@@ -1,30 +1,31 @@
-import {
-	Text,
-	SafeAreaView,
-	ScrollView,
-	ActivityIndicator,
-} from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { useTailwind } from "tailwind-rn/dist";
+import { useQuery } from "@apollo/client";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
 	CompositeNavigationProp,
 	useNavigation,
 } from "@react-navigation/native";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { TabStackParamList } from "../navigator/TabNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigator/RootNavigator";
-import { Image, Input } from "@rneui/themed";
+import { Image } from "@rneui/base";
+import { Input } from "@rneui/themed";
+import React, { useLayoutEffect, useState } from "react";
+import { ActivityIndicator, ScrollView } from "react-native";
+import { useTailwind } from "tailwind-rn/dist";
 
-export type CustomersScreenNavigationProp = CompositeNavigationProp<
-	BottomTabNavigationProp<TabStackParamList, "Customers">,
-	NativeStackNavigationProp<RootStackParamList>
+import CustomerCard from "../components/CustomerCard";
+import { GET_CUSTOMERS } from "../graphql/queries";
+import { RootStackPramList } from "../navigator/RootNavigator";
+import { TabStackPramsList } from "../navigator/TabNavigator";
+
+export type CustomersScreenNavigationProps = CompositeNavigationProp<
+	BottomTabNavigationProp<TabStackPramsList, "Customers">,
+	NativeStackNavigationProp<RootStackPramList>
 >;
 
-const CustomerScreen = () => {
+const CustomersScreen = () => {
 	const tw = useTailwind();
-	const navigation = useNavigation();
+	const navigation = useNavigation<CustomersScreenNavigationProps>();
 	const [input, setInput] = useState<string>("");
+	const { loading, error, data } = useQuery(GET_CUSTOMERS);
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -35,23 +36,27 @@ const CustomerScreen = () => {
 	return (
 		<ScrollView style={{ backgroundColor: "#59C1CC" }}>
 			<Image
-				source={require("../assets/delivery.jpg")}
-				style={{
-					width: "100%",
-					height: undefined,
-					aspectRatio: 1.5,
+				source={{
+					uri: "https://drive.google.com/uc?export=download&id=1cvuqfWbF_aTrYwwCMsWXWPhlp8ihEQ97",
 				}}
+				containerStyle={tw("w-full h-64")}
 				PlaceholderContent={<ActivityIndicator />}
 			/>
-
 			<Input
 				placeholder="Search by Customer"
 				value={input}
-        onChangeText={setInput}
-        containerStyle={tw("bg-white pt-5 pb-0 px-10")}
+				onChangeText={setInput}
+				containerStyle={tw("bg-white pt-5 pb-0 px-10")}
 			/>
+			{data?.getCustomers
+				?.filter((customer: CustomerList) =>
+					customer.value.name.includes(input),
+				)
+				.map(({ name: ID, value: { email, name } }: CustomerResponce) => (
+					<CustomerCard key={ID} email={email} name={name} userId={ID} />
+				))}
 		</ScrollView>
 	);
 };
 
-export default CustomerScreen;
+export default CustomersScreen;

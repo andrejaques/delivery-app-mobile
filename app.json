@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "delivery-app",
-    "slug": "delivery-app",
+    "name": "ups-clone",
+    "slug": "ups-clone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
